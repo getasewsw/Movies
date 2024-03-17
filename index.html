@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Movie Streaming </title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    /* Custom CSS */
+    .jumbotron {
+      background-image: url('https://source.unsplash.com/1600x900/?movie');
+      background-size: cover;
+      color: white;
+    }
+    .jumbotron .container {
+      background-color: rgba(0, 0, 0, 0.7); /* Adjust the opacity as needed */
+      padding: 20px;
+      border-radius: 10px;box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); 
+    }
+    .video-item {
+      margin-bottom: 20px;
+    } 
+    /*top nav*/
+    .sticky-header-1 {
+      position: -webkit-sticky; /* For Safari */
+      position: sticky;
+      top: 0;
+      background-color: white;
+      color: black;
+      z-index: 1000;
+      border-bottom: 1px solid #dee2e6;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); 
+      border-radius: 5px;
+    }
+    .sticky-header-1 .container{
+      color: black;
+    }
+    /* Sticky header */
+    .sticky-header-2 {
+      position: -webkit-sticky; /* For Safari */
+      position: sticky;
+      top: 0;
+      background-color: white;
+      z-index: 1000;
+      border-bottom: 1px solid #dee2e6;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); 
+      border-radius: 5px;
+      padding-bottom: 10px;
+    }           
+   /* Video container styling */
+   .video-container {
+    position: relative;
+    width: 100%;
+    height: 100vh; /* Adjust height as needed */
+    overflow: hidden;
+  }
+
+  /* Video styling */
+  #background-video {
+    position: absolute;
+    top: -100px;
+    left: 0;
+    width: 100%;
+    height: auto;
+    z-index: -1; /* Ensure video is behind other content */
+  }
+  </style>
+</head>
+<body>
+  <!-- Sticky top navigation bar -->
+  <nav class="navbar navbar-expand-lg sticky-header-1">
+    <div class="container">
+      <a class="navbar-brand" href="./">MOVIES IN AMHARIC</a> <!-- Website name -->
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="Coming_soon.html">Genre</a> <!-- Genre link -->
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  
+  <div class="jumbotron jumbotron-fluid">
+    <div class="container text-center">
+      <h1 class="display-4"><b>Welcome to My Movie Streaming Website</b></h1>
+      <h2>Discover and watch your favorite movies online.</h2>
+      <a class="btn btn-primary btn-lg" href="Coming_soon.html" role="button">Browse More Movies</a>
+    </div>
+  </div>
+
+  <!-- Main body starts here -->
+  <div class="container-fluid">
+
+    <h1 class="text-center mt-3 mb-4 sticky-header-2">Movie Streaming</h1> 
+
+    <div id="videos-container" class="row"></div>
+    <h1 class="text-center mt-3 mb-4">How To Download A Video</h1>
+    <h3 class="text-center mt-3 mb-4">Simplified YouTube Video Downloading Online</h3>
+    <p>Navigate to YouTube.com and select the video you wish to download for offline viewing.
+      Opt for your desired download format, including popular choices like MP3, MP4, WEBM, or 3GP.
+      Initiate the download process by clicking the "Download" button.
+      Enjoy uninterrupted access to your favorite videos and playlists offline! This method is perfectly compatible with major browsers such as Chrome, Firefox, and others.</p>
+    <div class="video-container">
+      <video id="background-video" autoplay muted loop>
+        <source src="https://en.savefrom.net/img/mainForm/search-panel-video.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+    <div class="video-container">
+      <video id="background-video" autoplay muted loop>
+        <source src="https://www.learningcontainer.com/wp-content/uploads/2020/05/sample-mp4-file.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+
+  </div>
+  
+  <script>
+    // Your YouTube Data API key
+    var apiKey = "AIzaSyDZRqFha0ZhnmCT-cS4N2bfrqvRxA880_A"; // Replace with your actual API key
+
+    // Your YouTube channel ID
+    var channelId = "UC2c0WhUiyn8EsHI8yvRJTTw"; // Replace with your actual channel ID
+
+    // Function to open video in popup window
+    function openVideo(videoId) {
+      var url = "https://www.youtube.com/watch?v=" + videoId;
+      window.open(url, "_blank", "width=600,height=400");
+    }
+    function getDownloadLink(videoId) {
+      return "https://www.ssyoutube.com/watch?v=" + videoId;
+    }
+
+    // Fetch videos from YouTube Data API
+    fetch(`https://www.googleapis.com/youtube/v3/search?key=${apiKey}&channelId=${channelId}&part=snippet,id&order=date&maxResults=10&type=video`)
+      .then(response => response.json())
+      .then(data => {
+        // Process video data
+        data.items.forEach(video => {
+          var videoId = video.id.videoId;
+          var videoTitle = video.snippet.title;
+          var videoThumbnail = video.snippet.thumbnails.medium.url;
+
+          // Create HTML for video item
+          var videoHtml = `
+            <div class="col-lg-4 col-md-6 col-sm-12 video-item">
+              <div class="card">
+                <img src="${videoThumbnail}" class="card-img-top" alt="${videoTitle}">
+                <div class="card-body">
+                  <h5 class="card-title">${videoTitle}</h5>
+                  <div class="row">
+                    <div class="col">
+                      <button class="btn btn-primary btn-block mb-2" onclick="openVideo('${videoId}')">Watch</button>
+                    </div>
+                    <div class="col">
+                      <a href="${getDownloadLink(videoId)}" class="btn btn-secondary btn-block" target="_blank">Download</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          `;
+
+          // Append video HTML to videos container
+          document.getElementById("videos-container").innerHTML += videoHtml;
+        });
+      })
+      .catch(error => console.error("Error fetching videos:", error));
+  </script>
+
+  <!-- main body Ends here -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
