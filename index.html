@@ -58,7 +58,7 @@
   /* Video styling */
   #background-video {
     position: absolute;
-    margin-top: 0px;
+    top: -100px;
     left: 0;
     width: 100%;
     height: auto;
@@ -68,7 +68,6 @@
 </head>
 <body>
   <!-- Sticky top navigation bar -->
-<div class="container">
   <nav class="navbar navbar-expand-lg sticky-header-1">
     <div class="container">
       <a class="navbar-brand" href="./">MOVIES IN AMHARIC</a> <!-- Website name -->
@@ -107,12 +106,13 @@
         <source src="https://en.savefrom.net/img/mainForm/search-panel-video.mp4" type="video/mp4">
         Your browser does not support the video tag.
       </video>
+    </div>
+    <div class="video-container">
       <video id="background-video" autoplay muted loop>
         <source src="https://www.learningcontainer.com/wp-content/uploads/2020/05/sample-mp4-file.mp4" type="video/mp4">
         Your browser does not support the video tag.
       </video>
     </div>
-
 
   </div>
   <footer class="footer mt-auto py-3 bg-dark">
@@ -120,7 +120,7 @@
       <span class="text-muted">© 2024 My Movie Streaming Website</span>
     </div>
   </footer>
-</div>
+  
   <script>
     // Your YouTube Data API key
     var apiKey = "AIzaSyDZRqFha0ZhnmCT-cS4N2bfrqvRxA880_A"; // Replace with your actual API key
